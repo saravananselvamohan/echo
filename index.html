@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Echo</title>
+</head>
+<link rel="icon" type="image/png" sizes="16x16" href="https://e7.pngegg.com/pngimages/435/40/png-clipart-computer-icons-ninja-favicon-iconfinder-avatar-warrior-drawing-share-icon-user.png">
+
+<body>
+
+<img src="https://i.gifer.com/B6mG.gif">
+
+<p class = 'center'>Tap mic icon to echo </p>
+<div id ='echo'>
+<img alt="Echo" id = 'voice' src="https://images.techhive.com/images/article/2014/03/google-voice-search-100248800-large.jpg">
+<img alt="Echo" id = 'voice-animate' src="https://s3.amazonaws.com/images.seroundtable.com/google-voice-search-1413374736.gif" >
+</div>
+</body>
+
+<style>
+#echo{
+    height: auto;
+    width: 400px;
+    position: absolute;
+    display: block;
+    left: 35%;
+    top: 35%;
+}
+#voice-animate{
+    position: absolute;
+    top: 90px;
+    right: 5px;
+    z-index: 2;
+    visibility:hidden
+}
+.center {
+    position: absolute;
+    bottom: 5%;
+    left: 50%;
+}
+</style>
+<script>
+var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition
+var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList
+var SpeechRecognitionEvent = SpeechRecognitionEvent || webkitSpeechRecognitionEvent
+
+var recognition = new SpeechRecognition();
+var speechRecognitionList = new SpeechGrammarList();
+
+document.addEventListener('click', function(e){
+   if(e.target.id == 'voice'){
+   document.getElementById('voice-animate').style.visibility = 'visible';
+   recognition.start();
+  }
+});
+
+recognition.onresult = function(event) {
+
+ 
+  console.log('Success: ' + event.results[0][0].transcript);
+  speak(event.results[0][0].transcript)
+}
+
+recognition.onspeechend = function() {
+  recognition.stop();
+  document.getElementById('voice-animate').style.visibility = 'hidden';
+}
+function speak(output){
+       let utterance = new SpeechSynthesisUtterance(output);
+	speechSynthesis.speak(utterance);
+}
+
+
+</script>
+
+</html>
